@@ -1,0 +1,44 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: test-service
+  profiles:
+    active: dev
+
+  druid:
+    druidClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://103.248.102.5:10029/lockplatform?autoReconnect=true&allowMultiQueries=true&failOverReadOnly=false&maxReconnects=10&characterEncoding=UTF-8
+    username: root
+    password: adminroot9000
+#最大连接数
+    maxActive: 30
+#最小连接数
+    minIdle: 5
+#获取连接的最大等待时间
+    maxWait: 10000
+#解决mysql8小时的问题
+    validationgQuery: SELECT 'X'
+#空闲连接的检查时间间隔
+    timeBetweenEvictionRunsMillis: 60000
+#空闲连接最小空闲时间
+    minEvictableIdleTimeMillis: 300000
+#配置mvc页面
+  mvc:
+    view:
+      prefix: classpath:/templates/
+#thymeleaf 配置
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    #缓存设置为false, 这样修改之后马上生效，便于调试
+    cache: false
+mybatis:
+  type-aliases-package: org.i9.xiaofang.service.repository.model
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  config: classpath:log4j2-spring.xml
+
