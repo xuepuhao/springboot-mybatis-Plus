@@ -7,8 +7,6 @@
 package org.i9.xiaofang.web.controller;
 
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.i9.xiaofang.service.ManagerService;
 import org.i9.xiaofang.service.repository.vo.LoginForm;
 import org.i9.xiaofang.util.BusinessException;
@@ -33,7 +31,6 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("")
-@Api("loginController相关的api")
 public class loginController {
 
     @Autowired
@@ -49,13 +46,11 @@ public class loginController {
      * 登录页面
      * @return
      */
-    @ApiOperation(value = "跳转到登录页面")
     @RequestMapping(value = "/login.zhtml", method = RequestMethod.GET)
     public ModelAndView login(@ModelAttribute LoginForm loginForm) {
         return new ModelAndView("login");
     }
 
-    @ApiOperation(value = "验证用户名密码",notes = "验证某个用户信息")
     @RequestMapping(value = "/login.zhtml", method = RequestMethod.POST)
     public ModelAndView loginVeri(@Valid LoginForm loginForm, BindingResult bindingResult) {
         try {
