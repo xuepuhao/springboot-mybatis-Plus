@@ -58,6 +58,7 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setUnauthorizedUrl("/error");
         map.put("/logout","logout");
         map.put("/login.zhtml","anon");
+        map.put("/t-user/**","anon");
         map.put("/swagger-ui.html","anon");
         map.put("/login/**","anon");
         map.put("/webjars/**","anon");
