@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.i9.xiaofang.service.repository.mapper.TUserMapper">
+
+    <sql id="Query_By_Dto_Where_Clause">
+        <trim prefix="WHERE"  prefixOverrides="AND|OR" >
+            <if test="example.name != null and example.name != ''">
+                OR( name LIKE CONCAT('%',CONCAT('${example.name}','%'))
+            </if>
+            <if test="example.phone != null and example.phone != ''">
+                OR phone LIKE CONCAT('%',CONCAT('${example.phone}','%')))
+            </if>
+        </trim>
+    </sql>
+    <select id="selectByLimitPage" resultType="org.i9.xiaofang.service.repository.model.TUser">
+      SELECT
+        *
+        FROM t_user
+        <if test="_parameter != null" >
+            <include refid="Query_By_Dto_Where_Clause" />
+        </if>
+    </select>
+</mapper>
