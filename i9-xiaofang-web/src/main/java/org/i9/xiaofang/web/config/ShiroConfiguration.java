@@ -57,6 +57,7 @@ public class ShiroConfiguration {
         //错误页面，认证不通过跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/error");
         map.put("/logout","logout");
+        map.put("/static/*/**","anon");
         map.put("/login.zhtml","anon");
         map.put("/t-user/**","anon");
         map.put("/swagger-ui.html","anon");

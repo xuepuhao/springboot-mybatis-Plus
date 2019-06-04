@@ -1,7 +1,9 @@
 package org.i9.xiaofang.service;
 
-import org.i9.xiaofang.service.repository.model.TManager;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.i9.xiaofang.service.repository.model.TManager;
+import org.i9.xiaofang.service.repository.vo.LoginForm;
+import org.i9.xiaofang.util.BusinessException;
 
 /**
  * <p>
@@ -13,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TManagerService extends IService<TManager> {
 
-    TManager checkManagerLogin(String userName, String password);
+    TManager checkManagerLogin(String userName, String password) throws BusinessException;
+
+    void login(LoginForm loginForm) throws  BusinessException;
 }

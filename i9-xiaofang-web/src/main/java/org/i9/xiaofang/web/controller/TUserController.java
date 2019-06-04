@@ -38,9 +38,9 @@ public class TUserController {
     @RequestMapping("/selectAllUsers")
     public Map<String,Object> selectAllUsers() {
         HashMap<String, Object> hashMap = new HashMap<>();
-        QueryWrapper<TUser> wrapper = new QueryWrapper<>();
-        wrapper.like("name","新");
-        List<TUser> users = tUserService.list(wrapper);
+        QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name","新");
+        List<TUser> users = tUserService.list(queryWrapper);
         hashMap.put("users", users);
         return hashMap;
     }

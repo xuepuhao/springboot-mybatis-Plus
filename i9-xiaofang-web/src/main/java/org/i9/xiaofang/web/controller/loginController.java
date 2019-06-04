@@ -7,8 +7,10 @@
 package org.i9.xiaofang.web.controller;
 
 
+import org.i9.xiaofang.service.TManagerService;
 import org.i9.xiaofang.service.repository.vo.LoginForm;
 import org.i9.xiaofang.util.BusinessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +33,9 @@ import javax.validation.Valid;
 @RequestMapping("")
 public class loginController {
 
+    @Autowired
+    private TManagerService tManagerService;
+
     @RequestMapping("/hello")
     public String hello(Model m){
         m.addAttribute("name","thymeleaf");
@@ -49,7 +54,7 @@ public class loginController {
     @RequestMapping(value = "/login.zhtml", method = RequestMethod.POST)
     public ModelAndView loginVeri(@Valid LoginForm loginForm, BindingResult bindingResult) {
         try {
-//            managerService.login(loginForm);
+            tManagerService.login(loginForm);
             return new ModelAndView("redirect:index.zhtml");
         } catch (BusinessException e) {
             // 身份验证失败

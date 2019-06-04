@@ -7,16 +7,16 @@
 package org.i9.xiaofang.web.security;
 
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.i9.xiaofang.util.BusinessException;
+import org.i9.xiaofang.service.TManagerService;
+import org.i9.xiaofang.service.repository.model.TManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
 public class SecurityRealm extends AuthorizingRealm {
     private static Logger logger = LoggerFactory.getLogger(SecurityRealm.class);
 
-//    @Autowired
-//    private TManagerService tManagerService;
+    @Autowired
+    private TManagerService tManagerService;
 
     //权限验证
     @Override
@@ -42,18 +42,14 @@ public class SecurityRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String userName =String.valueOf(token.getPrincipal());
-        String password =new String((char[])token.getCredentials());
-//        TManager authentication =null;
-        try {
-            // 通过数据库验证
-//            authentication = tManagerService.checkManagerLogin(userName, password);
-        } catch (BusinessException exception) {
-            throw new AuthenticationException(exception.getErrorMessage());
+        TManager authentication =null;
+        QueryWrapper<TManager> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",userName);
+        authentication = tManagerService.getOne(queryWrapper);
+        if (authentication == null) {
+            throw  new UnknownAccountException();
         }
-        /*if (authentication == null) {
-            throw new AuthenticationException("用户名或密码错误");
-        }*/
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userName, password, getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userName, authentication.getPassword(), getName());
         return authenticationInfo;
     }
 }
