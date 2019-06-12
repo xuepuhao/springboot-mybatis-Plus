@@ -1,47 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>主页</title>
-    <script src="../static/echarts/echarts.min.js" th:src="@{/echarts/echarts.min.js}" />
-    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" ></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css"  href="../static/css/pageMe.css" th:href="@{/css/pageMe.css}"/>
+    <link rel="stylesheet" type="text/css"  href="../static/bootstrap-3.3.7-dist/css/bootstrap.css" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.css}"/>
 </head>
 <body>
-    index
-    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-    <div id="main" style="width: 600px;height:400px;"></div>
-    <script type="text/javascript" >
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById("main"));
-        // 指定图表的配置项和数据
-        var option = {
-            title: {
-                text: 'ECharts'
-            },
-            tooltip: {},
-            legend: {
-                data:['日销量',"月销量"]
-            },
-            xAxis: {
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-            },
-            yAxis: {},
-            series: [
-                {
-                name: '日销量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-                },
-                {
-                    name: '月销量',
-                    type: 'bar',
-                    data: [2, 11, 25, 8, 15, 30]
-                },
-            ]
-        };
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    </script>
+    <div class="table-responsive">
+        <table id="dataSet" class="table">
+            <thead>
+            <tr>
+                <td>手机号</td>
+                <td>创建时间</td>
+                <td>邀请码</td>
+                <td>亲情号</td>
+                <td>微信id</td>
+                <td>状态</td>
+            </tr>
+            </thead>
+            <tbody id="bodyData">
+            </tbody>
+        </table>
+    </div>
+
+    <div id="page" class="page_div"></div>
+
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/bootstrap-3.3.7-dist/js/bootstrap.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
 </body>
+<script>
+    var param ={
+        currentPage : 1,
+        pageSize :10
+    };
+
+    function grid(param) {
+        $.ajax({
+            type:"post",
+            data:param,
+            url : "/t-user/openTable",
+            success :function (data) {
+                var totalSize = data.data.users.total;
+                console.log("总个数为："+totalSize);
+                var currentPage = data.data.users.current;
+                console.log("当前页数："+currentPage);
+                var totalPage = data.data.users.pages;
+                console.log("总页数："+totalPage);
+
+                //生成表格
+                var dataAll =data.data.users.records;
+                var bodyHtml ="";
+                for(i in dataAll){
+                    if(dataAll[i].state ==0){
+                        bodyHtml += "<tr><td>"+dataAll[i].phone+"</td><td>"+dataAll[i].createTime+"</td><td>"+dataAll[i].inviteCode+"</td><td>"+dataAll[i].familyPhone+"</td><td>"+dataAll[i].wechatId+"</td><td>未审核</td></tr>";
+                    }else{
+                        bodyHtml += "<tr><td>"+dataAll[i].phone+"</td><td>"+dataAll[i].createTime+"</td><td>"+dataAll[i].inviteCode+"</td><td>"+dataAll[i].familyPhone+"</td><td>"+dataAll[i].wechatId+"</td><td>已审核</td></tr>";
+                    }
+                }
+                $("#bodyData").html(bodyHtml);
+                // 分页
+                $("#page").paging({
+                    pageNum: currentPage, // 当前页面
+                    totalNum: totalPage, // 总页码
+                    totalList: totalSize, // 记录总数量
+                    callback: function (currentPage) { //回调函数
+                        var param = {
+                            currentPage : currentPage,
+                            pageSize : 10
+                        }
+                        grid(param);
+                    }
+                });
+            }
+        });
+    }
+    grid(param);
+</script>
+<script src="../static/js/pageMe.js" th:src="@{/js/pageMe.js}"></script>
 </html>

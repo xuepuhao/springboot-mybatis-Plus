@@ -30,7 +30,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         try {
             Page<TUser> page = new Page<>(userDto.getCurrentPage(), userDto.getPageSize());
             QueryWrapper<TUser> wrappser = new QueryWrapper<>();
-            wrappser.like("name",userDto.getName());
+            //wrappser.like("name",userDto.getName());
             tUserMapper.selectMapsPage(page,wrappser);
             return page;
         }catch (Exception e){
