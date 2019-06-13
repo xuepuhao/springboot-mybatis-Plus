@@ -27,7 +27,7 @@ public class TManagerController {
         HashMap<String, Object> hashMap = new HashMap<>();
         int[] datas={5,10,20,30,5,2,6,12};
         String[] dataTypes={"日销量","月销量"};
-
         return hashMap;
     }
+
 }
