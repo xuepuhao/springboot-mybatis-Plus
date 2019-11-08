@@ -1,0 +1,12 @@
+eureka:
+  client:
+    #是否将自己注册到eureka server，构建集群环境时，需将自己注册到集群中，默认为true
+    register-with-eureka: false
+    #是否从eureka server获取注册信息，构建集群环境时，需同步其他eureka server节点，默认为true
+    fetchRegistry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: eureka-server
+
