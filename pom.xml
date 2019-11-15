@@ -27,6 +27,7 @@
         <module>i9-xiaofang-service</module>
         <module>i9-xiaofang-util</module>
         <module>i9-xiaofang-eureka</module>
+        <module>i9-xiaofang-zuul</module>
     </modules>
 
     <properties>
