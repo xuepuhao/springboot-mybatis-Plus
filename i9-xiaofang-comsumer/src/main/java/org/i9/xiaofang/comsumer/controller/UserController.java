@@ -1,6 +1,7 @@
 package org.i9.xiaofang.comsumer.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,9 @@ public class UserController{
     @Autowired
     private ProducterClient producterClient;
 
-    @HystrixCommand(fallbackMethod = "getUsernameFallback")
+    /*@HystrixCommand(fallbackMethod = "getUsernameFallback", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
+    })*/
     @RequestMapping("/getAlluser")
     public Object getAlluser(){
         return restTemplate.getForObject("http://i9-xiaofang-web/t-user/selectAllUsers",String.class);

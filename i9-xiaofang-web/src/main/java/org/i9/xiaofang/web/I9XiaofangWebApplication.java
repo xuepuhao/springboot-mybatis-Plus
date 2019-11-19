@@ -15,6 +15,5 @@ public class I9XiaofangWebApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(I9XiaofangWebApplication.class, args);
 	}
-
 }
 

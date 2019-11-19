@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 
 @Component
-@FeignClient(name = "i9-xiaofang-web")
+@FeignClient(name = "i9-xiaofang-web",fallbackFactory = DemoClientFallBackFactory.class)
 public interface ProducterClient {
 
     @ResponseBody
