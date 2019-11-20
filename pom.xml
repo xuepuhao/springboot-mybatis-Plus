@@ -149,6 +149,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- 使用maven-compiler-plugin插件可以指定项目源码的jdk版本，编译后的jdk版本，以及编码。 -->
